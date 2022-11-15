@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS 
+
 #include "Funciones.h"
 
 
@@ -57,6 +59,7 @@ void leer_consultas(string nombre3, ultima_consulta* array_consultas, int tam5)
     int i = 0;
 
     string dummy;
+    string aux;
 
     char coma = ',';
 
@@ -72,9 +75,10 @@ void leer_consultas(string nombre3, ultima_consulta* array_consultas, int tam5)
 
         // hago el resize ya que no se la cantidad de personas en la lista 
 
-        Indata2 >> array_consultas[i].dni_1 >> coma >> array_consultas[i].fecha >> coma
-                >> array_consultas[i].Asistencia >> array_consultas[i].Medico >> coma >>
-                  
+        Indata2 >> array_consultas[i].dni_1 >> coma >> aux >> coma
+            >> array_consultas[i].Asistencia >> array_consultas[i].Medico >> coma;
+
+        //array_consultas[i].fecha = aux;
 
         i++;
 
@@ -104,13 +108,15 @@ float fecha(ultima_consulta * Consulta)
    
 }
 
-void separar_pacientes(Paciente* array_pacientes, ultima_consulta* array_consultas, int tam, int tam5, Paciente* lista_mas10, int tam2)
+void separar_pacientes(Paciente* array_pacientes, ultima_consulta* array_consultas, int tam, int tam5, Paciente* Lista_mas10, int tam2, Paciente* Lista_menos10, int tam3)
 {
    
-     // le paso las listas de los pacientes, de las consultas, 
+     // le paso las listas de los pacientes y de las consultas 
     // y las listas vacias donde voy separar
 
-  
+    tam2 = 0;  //Para +10 años
+    tam3 = 0;  //Para -10 años
+
   
   for (int i = 0; i < tam; i++)
 
@@ -121,8 +127,29 @@ void separar_pacientes(Paciente* array_pacientes, ultima_consulta* array_consult
           {
               
               {  
-                  int diferencia = fecha(array_consultas[j].fecha);
-                  if ( diferencia <)
+                 
+                  float diferencia = fecha(&array_consultas[j]);
+                  if ( diferencia < 10 && array_consultas[j].Asistencia == false)  //Solo guardamos los pacientes que no asistieron
+                                                                                   //Para intentar recuperarlos posteriormente
+                  { 
+                     if(tam2 == 0) Lista_menos10[tam2] = array_pacientes[i];
+
+                     resize(Lista_menos10, tam2);
+
+                     Lista_menos10[tam2] = array_pacientes[i];
+                  
+                  }
+
+                  if (diferencia > 10 && array_consultas[j].Asistencia == false)  //Solo guardamos los pacientes que no asistieron
+                                                                                  //Para intentar recuperarlos posteriormente
+                  {
+                      if (tam2 == 0) Lista_mas10[tam3] = array_pacientes[i];
+
+                      resize(Lista_mas10, tam3);
+
+                      Lista_mas10[tam3] = array_pacientes[i];
+
+                  }
 
               }
           }
