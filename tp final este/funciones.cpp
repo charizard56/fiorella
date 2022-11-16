@@ -268,3 +268,48 @@ void internados_o_fallecidos(Paciente* Lista_menos10, int tam2, Paciente* array_
                 
     }
 }
+
+void resize3(Medico* array_medicos, int tam9)
+{
+    Medico * array_medicos_aux = new Medico [tam9 + 1];
+
+    for (int i = 0; i < tam9; i++)
+    {
+        array_medicos_aux[i] = array_medicos[i];
+    }
+
+    delete[] array_medicos;
+    array_medicos = array_medicos_aux;
+}
+
+void leer_medicos(Medico* array_medicos, int tam9)
+
+{
+    int i = 0;
+
+    string dummy;
+    string aux;
+
+    char coma = ',';
+
+    fstream Indata4;
+
+    Indata4.open("IRI_Medicos.csv", ios::in); // abro el archivo de consultas en modo lectura 
+
+    while (!Indata4.eof()) // mientras que el archivo sea distinto del final 
+    {
+        Indata4 >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma; // salteo encabezado
+
+        resize3(array_medicos, tam9);
+
+        // hago el resize ya que no se la cantidad de docs en la lista 
+
+        Indata4 >> array_medicos[i].matricula >> coma >> array_medicos[i].nombre >> coma
+                >> array_medicos[i].apellido >> array_medicos[i].teldoc >> coma >> array_medicos[i].especialidad >> coma
+                >> array_medicos[i].actividad;
+          
+        i++;
+
+    } // ya tengo mi lista de doctores cargada 
+    Indata4.close(); // cierro el archivo 
+}

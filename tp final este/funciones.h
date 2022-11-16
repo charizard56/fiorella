@@ -50,7 +50,7 @@ Obrasoc;
 
 typedef struct
 {
-    string  id;
+    string matricula;
     string teldoc; 
     string nombre;
     string apellido;
@@ -95,4 +95,5 @@ void separar_pacientes(Paciente* array_pacientes, ultima_consulta* array_consult
 
 void internados_o_fallecidos(Paciente* Lista_menos10, int tam2, Paciente* array_nc, int tam7, Paciente* array_muertos, int tam8);  // clasifica segun vivos o muertos a partir de menos de 10 años de la utlima consulta
 
-//void crear_archivos ( string archivo, Paciente)
+void resize3(Medico* array_medicos, int tam9); 
+void leer_medicos(Medico* array_medicos, int tam9);
