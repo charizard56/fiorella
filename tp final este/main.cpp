@@ -18,6 +18,8 @@ int main() {
     int tam4 = 0;
     int tam5 = 0; 
     int tam6 = 0; 
+    int tam7 = 0; 
+    int tam8 = 0; 
 
 
     Paciente* array_pacientes = new Paciente[tam];
@@ -28,9 +30,14 @@ int main() {
 
     ultima_consulta* array_consultas = new ultima_consulta[tam5]; 
 
-    paciente_full* lista_paciente_full = new paciente_full[tam6]; // lista que guarda TODOS LOS DATOS DEL PACIENTE 
+    //paciente_full* lista_paciente_full = new paciente_full[tam6]; // lista que guarda TODOS LOS DATOS DEL PACIENTE 
 
-    getchar;
+    Paciente* array_vivos = new Paciente[tam7]; 
+
+    Paciente* array_muertos = new Paciente[tam8]; 
+
+
+    getchar();
 
     return 0;
 }
