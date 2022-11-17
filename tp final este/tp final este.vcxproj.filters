@@ -15,12 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\TP FINAL\data_files\input\IRI_Consultas.csv" />
-    <None Include="..\..\TP FINAL\data_files\input\IRI_Consultas.xlsx" />
-    <None Include="..\..\TP FINAL\data_files\input\IRI_Contactos.csv" />
-    <None Include="..\..\TP FINAL\data_files\input\IRI_Medicos.csv" />
-    <None Include="..\..\TP FINAL\data_files\input\IRI_ObraSocial.csv" />
-    <None Include="..\..\TP FINAL\data_files\input\IRI_Pacientes.csv" />
     <None Include="..\..\TP FINAL\data_files\output\dummy" />
   </ItemGroup>
   <ItemGroup>
