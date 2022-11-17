@@ -28,7 +28,7 @@ typedef struct
     string matricula;
     bool Asistencia; 
 }
-ultima_consulta ;
+Consulta ;
 
 typedef struct
 {
@@ -40,11 +40,12 @@ typedef struct
     string os; // obra social
     string  estado ; // internado, fallecido, nc
 }
-Paciente; 
+Paciente;               //Estructura para leer los pacientes
 
 typedef struct 
 {
-    enum os { Medicus, OSDE, IOSFA, italiano, Aleman, Espanyol };
+    string ID;
+    string Nombre;
 } 
 Obrasoc; 
 
@@ -69,31 +70,49 @@ typedef struct
     bool retorna; // si el paciente retorna o no. 
     Medico medico;  // datos del ultimo medico q atendio 
 
-} paciente_full; // struct que almacena todos los datos del paciente 
+} 
+paciente_full;          // Estructura para guardar todos los datos del paciente
 
-fstream Indata1;
-fstream Indata2; 
-fstream Indata3; 
-fstream Indata4; 
-fstream Indata5; 
-fstream Indata6; // archivo donde voy a guardar pacientes archivados
+//Declaramos las variables para leer y guardar en los archivos
 
+ifstream Indata1;  //Lee Contacto
+ifstream Indata2;  //Lee pacientes
+ifstream Indata3;  //Lee consultas
+ifstream Indata4;  //Lee medicos
+ifstream Indata5;  //Lee Obras sociales
+ofstream Outdata1; //Guarda pacientes archivados
+ofstream Outdata2; //Guarda pacientes que volveran
 
-void resize(Paciente* lista, int N);
+                                    //Declaracion de las funciones\\
 
-void leer_pacientes(string Indata2, Paciente* array_pacientes, int tam);
+//Lectura de archivos:
 
-tm conversion(string consulta); 
+void leer_pacientes(string Indata2, Paciente *array_pacientes, int tam);
 
-float fecha(string fecha); // verifica si la fecha es menor o mayor a 10 años 
+void leer_consultas(string nombre3, Consulta *array_consultas, int tam_cons);
+
+void leer_medicos(Medico *array_medicos, int tam_med);
+
+void leer_ObrasSociales(Obrasoc* ObraSocial, int tam_obr);
+
+//Clasificaciones por lista de los pacientes:
+
+//Organiza los pacientes en listas segun su ultima consulta (+10años/-10años)
+void separar_pacientes(Paciente* array_pacientes, Consulta* array_consultas, int tam, int tam_cons, Paciente* Lista_mas10, int tam_mas10, Paciente* Lista_menos10, int tam_menos10);
+
+//Organiza los clientes en listas segun si estan internados o fallecieron
+void internados_o_fallecidos(Paciente* Lista_menos10, int tam_mas10, Paciente* array_nc, int tam_per, Paciente* array_muertos, int tam_fall);
+
+//Herramientas de apoyo:
+
+tm conversion(string consulta);                               //Convierte una variable de tipo string a tm
+
+float fecha(string fecha);                                   //Retorna en años la diferencia entre 2 fechas
+
+void resize_P(Paciente* lista, int N);                      //Incrementa la dimension de la lista para tipos Paciente
                             
-void resize2(ultima_consulta* array_consultas, int tam5); 
+void resize_C(Consulta* array_consultas, int tam_cons);    //Incrementa la dimension de la lista para tipos Consulta
 
-void leer_consultas(string nombre3, ultima_consulta* array_consultas, int tam5); 
+void resize_M(Medico* array_medicos, int tam_med);           //Incrementa la dimension de la lista para tipos Medico
 
-void separar_pacientes(Paciente* array_pacientes, ultima_consulta* array_consultas, int tam, int tam5, Paciente* Lista_mas10, int tam2, Paciente* Lista_menos10, int tam3); 
-
-void internados_o_fallecidos(Paciente* Lista_menos10, int tam2, Paciente* array_nc, int tam7, Paciente* array_muertos, int tam8);  // clasifica segun vivos o muertos a partir de menos de 10 años de la utlima consulta
-
-void resize3(Medico* array_medicos, int tam9); 
-void leer_medicos(Medico* array_medicos, int tam9);
+void resize_M(Obrasoc* array_ObraSocial, int tam_obr);

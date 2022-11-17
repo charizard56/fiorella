@@ -4,11 +4,11 @@
 
 
 
-void resize(Paciente * array_pacientes, int tam) // incrementa la dimension de 1 en 1 del array
+void resize_P(Paciente * array_pacientes, int tam_P) // incrementa la dimension de 1 en 1 del array
 {
-    Paciente* array_paciente_aux = new Paciente[tam + 1];  // icremento de a 1
+    Paciente* array_paciente_aux = new Paciente[tam_P + 1];  // icremento de a 1
 
-    for (int i = 0; i < tam; i++) // en la ultima posicion se agrega una mas, se redimensiona
+    for (int i = 0; i < tam_P; i++) // en la ultima posicion se agrega una mas, se redimensiona
     {
         array_paciente_aux[i] = array_pacientes[i]; 
     }
@@ -19,7 +19,7 @@ void resize(Paciente * array_pacientes, int tam) // incrementa la dimension de 1
 
 } // aumenta dimension de pacientes  
 
-void leer_pacientes(string Nombre2, Paciente* array_pacientes, int tam)
+void leer_pacientes(string Nombre2, Paciente* array_pacientes, int tam_P)
 {
     
     int i = 0;
@@ -35,7 +35,7 @@ void leer_pacientes(string Nombre2, Paciente* array_pacientes, int tam)
     while (! Indata2.eof()) // reviso que el archivo sea distinto de end of file
     {
         Indata2 >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma; 
-        resize(array_pacientes, tam);
+        resize_P(array_pacientes, tam_P);
         // hago el resize ya que no se la cantidad de personas en la lista
 
         Indata2 >> array_pacientes[i].dni    >> coma >> array_pacientes[i].Nombre >> coma
@@ -50,11 +50,11 @@ void leer_pacientes(string Nombre2, Paciente* array_pacientes, int tam)
     Indata2.close(); // cierro el archivo 
 }
 
-void resize2(ultima_consulta* array_consultas, int tam5)
+void resize_C(Consulta* array_consultas, int tam_cons)
 {
-    ultima_consulta* array_consultas_aux = new ultima_consulta[tam5 + 1];
+    Consulta* array_consultas_aux = new Consulta[tam_cons + 1];
 
-    for (int i = 0; i < tam5; i++)
+    for (int i = 0; i < tam_cons; i++)
     {
         array_consultas_aux[i] = array_consultas[i];
     }
@@ -63,7 +63,20 @@ void resize2(ultima_consulta* array_consultas, int tam5)
     array_consultas = array_consultas_aux;
 } // aumenta dimension de consultas
 
-void leer_consultas(string nombre3, ultima_consulta* array_consultas, int tam5)
+void resize_O(Obrasoc* array_ObraSocial, int tam_obr)
+{
+    Obrasoc* array_ObraSocial_aux = new Obrasoc[tam_obr + 1];
+
+    for (int i = 0; i < tam_obr; i++)
+    {
+        array_ObraSocial_aux[i] = array_ObraSocial[i];
+    }
+
+    delete[] array_ObraSocial;
+    array_ObraSocial = array_ObraSocial_aux;
+} // aumenta dimension de consultas
+
+void leer_consultas(string nombre3, Consulta* array_consultas, int tam_cons)
 {
     int i = 0;
 
@@ -80,7 +93,7 @@ void leer_consultas(string nombre3, ultima_consulta* array_consultas, int tam5)
     {
         Indata2 >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma; // salteo encabezado
        
-        resize2 (array_consultas, tam5);
+        resize_C (array_consultas, tam_cons);
 
         // hago el resize ya que no se la cantidad de personas en la lista 
 
@@ -138,7 +151,7 @@ float fecha(string fecha)
    
 }
 
-void separar_pacientes(Paciente* array_pacientes, ultima_consulta* array_consultas, int tam, int tam5, Paciente* Lista_mas10, int tam2, Paciente* Lista_menos10, int tam3)
+void separar_pacientes(Paciente* array_pacientes, Consulta* array_consultas, int tam_P, int tam_cons, Paciente* Lista_mas10, int tam_mas10, Paciente* Lista_menos10, int tam_menos10)
 {
 
     // le paso las listas de los pacientes y de las consultas 
@@ -150,16 +163,16 @@ void separar_pacientes(Paciente* array_pacientes, ultima_consulta* array_consult
     Paciente* falso_archivado   =    new Paciente[n1]; // listas donde voy a guardar los parcientes que SI fueron 
     Paciente* si_fue_menos10    =    new Paciente[n2]; // los separo tambien + 10 años  y - 10 años, 
 
-    tam2 = 0;  //Para +10 años
-    tam3 = 0;  //Para -10 años 
+    tam_mas10 = 0;  //Para +10 años
+    tam_menos10 = 0;  //Para -10 años 
 
     string aux; 
 
   
-  for (int i = 0; i < tam; i++)
+  for (int i = 0; i < tam_P; i++)
 
   {   
-      for (int j = 0; j < tam5; j++)
+      for (int j = 0; j < tam_cons; j++)
       {
           if (array_consultas[j].dni_1 == array_pacientes[i].dni)
           {
@@ -171,11 +184,11 @@ void separar_pacientes(Paciente* array_pacientes, ultima_consulta* array_consult
                   if ( diferencia < 10 && array_consultas[j].Asistencia == false)  //Solo guardamos los pacientes que no asistieron
                                                                                    //Para intentar recuperarlos posteriormente
                   { 
-                     if(tam2 == 0) Lista_menos10[tam2] = array_pacientes[i];
+                     if(tam_mas10 == 0) Lista_menos10[tam_mas10] = array_pacientes[i];
 
-                     resize(Lista_menos10, tam2);
+                     resize_P(Lista_menos10, tam_mas10);
 
-                     Lista_menos10[tam2] = array_pacientes[i];
+                     Lista_menos10[tam_mas10] = array_pacientes[i];
                   
                   }  
 
@@ -184,7 +197,7 @@ void separar_pacientes(Paciente* array_pacientes, ultima_consulta* array_consult
                   {
                       if (n1 == 0) falso_archivado[n1] = array_pacientes[i];
 
-                      resize(falso_archivado, n1);
+                      resize_P(falso_archivado, n1);
 
                       falso_archivado[n1] = array_pacientes[i];
 
@@ -194,23 +207,23 @@ void separar_pacientes(Paciente* array_pacientes, ultima_consulta* array_consult
                   if (diferencia > 10 && array_consultas[j].Asistencia == false)  //Solo guardamos los pacientes que no asistieron
                                                                                   //Para intentar recuperarlos posteriormente
                   {
-                      if (tam2 == 0) Lista_mas10[tam3] = array_pacientes[i];
+                      if (tam_mas10 == 0) Lista_mas10[tam_menos10] = array_pacientes[i];
 
-                      resize(Lista_mas10, tam3);
+                      resize_P(Lista_mas10, tam_menos10);
 
-                      Lista_mas10[tam3] = array_pacientes[i]; 
+                      Lista_mas10[tam_menos10] = array_pacientes[i]; 
 
                   } 
 
                   if (diferencia > 10 && array_consultas[j].Asistencia == false)  //Solo guardamos los pacientes que si asistieron
                                                                                  //Para llevar control, no hacer nada con estos pacientes no es opcion ;) 
                   {
-                      if (n2 == 0) si_fue_menos10[tam3] = array_pacientes[i];
+                      if (n2 == 0) si_fue_menos10[tam_menos10] = array_pacientes[i];
 
                       
-                          resize(si_fue_menos10, n2);
+                          resize_P(si_fue_menos10, n2);
 
-                          Lista_mas10[tam3] = array_pacientes[i];
+                          Lista_mas10[tam_menos10] = array_pacientes[i];
                      
 
                   }
@@ -245,22 +258,24 @@ void separar_pacientes(Paciente* array_pacientes, ultima_consulta* array_consult
   delete[] falso_archivado; 
 }
 
-void internados_o_fallecidos(Paciente* Lista_menos10, int tam2, Paciente* array_nc, int tam7, Paciente* array_muertos, int tam8)
+void internados_o_fallecidos(Paciente* Lista_menos10, int tam_mas10, Paciente* array_nc, int tam_per, Paciente* array_muertos, int tam_fall)
 
 {
     int cont_muertos = 0;
     int cont_nc = 0; 
 
-    for (int i = 0; i < tam2; i++)
+    for (int i = 0; i < tam_mas10; i++)
     {
         if (Lista_menos10[i].estado == "fallecido")
         {
+            resize_P(array_muertos, tam_fall);
             array_muertos[cont_muertos] = Lista_menos10[i];
             cont_muertos++;
         }
 
         if (Lista_menos10[i].estado == "n/c")
         {
+            resize_P(array_nc, tam_per);
             array_nc[cont_nc] = Lista_menos10[i];
             cont_nc++;
 
@@ -269,11 +284,11 @@ void internados_o_fallecidos(Paciente* Lista_menos10, int tam2, Paciente* array_
     }
 }
 
-void resize3(Medico* array_medicos, int tam9)
+void resize_M(Medico* array_medicos, int tam_med)
 {
-    Medico * array_medicos_aux = new Medico [tam9 + 1];
+    Medico * array_medicos_aux = new Medico [tam_med + 1];
 
-    for (int i = 0; i < tam9; i++)
+    for (int i = 0; i < tam_med; i++)
     {
         array_medicos_aux[i] = array_medicos[i];
     }
@@ -282,7 +297,7 @@ void resize3(Medico* array_medicos, int tam9)
     array_medicos = array_medicos_aux;
 }
 
-void leer_medicos(Medico* array_medicos, int tam9)
+void leer_medicos(Medico* array_medicos, int tam_med)
 
 {
     int i = 0;
@@ -300,7 +315,7 @@ void leer_medicos(Medico* array_medicos, int tam9)
     {
         Indata4 >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma; // salteo encabezado
 
-        resize3(array_medicos, tam9);
+        resize_M(array_medicos, tam_med);
 
         // hago el resize ya que no se la cantidad de docs en la lista 
 
@@ -312,4 +327,34 @@ void leer_medicos(Medico* array_medicos, int tam9)
 
     } // ya tengo mi lista de doctores cargada 
     Indata4.close(); // cierro el archivo 
+}
+
+void leer_ObrasSociales(Obrasoc* ObraSocial, int tam_obr) {
+
+    
+    int i = 0;
+
+    string dummy;
+
+    char coma = ',';
+
+    fstream Indata5;
+
+    Indata5.open("IRI_ObraSocial.csv", ios::in);  // abro el archivo en modo lectura
+
+    while (!Indata5.eof()) // reviso que el archivo sea distinto de end of file
+    {
+        Indata5 >> dummy >> coma >> dummy >> coma;
+        resize_O(ObraSocial, tam_obr);
+        // hago el resize ya que no se la cantidad de personas en la lista
+
+        Indata5 >> ObraSocial[i].ID >> coma >> ObraSocial[i].Nombre >> coma;
+        // guardo a medida que voy leyendo en mi lista 
+
+        i++; // incremento las iteraciones ! 
+
+    }
+    Indata5.close(); // cierro el archivo 
+
+    
 }

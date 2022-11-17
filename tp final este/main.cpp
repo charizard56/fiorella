@@ -5,51 +5,79 @@ using namespace std;
 
 int main() {
 
+    //Declaramos todas las variables que utilizaremos para almacenar las dimensiones de cada lista.
 
-    Indata1.open("IRI_Consultas.csv");
-    Indata2.open("IRI_Pacientes.csv");
-    Indata3.open("IRI_Contatos.csv");
-    Indata4.open("IRI_Medicos.csv");
-    Indata5.open("IRI_ObraSocial.csv");
+    int tam_P  = 0;
+    int tam_mas10 = 0;
+    int tam_menos10 = 0;
+    int tam_cons = 0; 
+    int tam_per = 0; 
+    int tam_fall = 0; 
+    int tam_med = 0; 
+    int tam_obr = 0;
 
-    int tam  = 0;
-    int tam2 = 0;
-    int tam3 = 0;
-    int tam4 = 0;
-    int tam5 = 0; 
-    int tam6 = 0; 
-    int tam7 = 0; 
-    int tam8 = 0; 
-    int tam9 = 0; 
+                                         //Declaracion de Listas en memoria\\
+
+    /*
+    Listas de tipos Paciente :
+    Declaramos la lista que usamos para leer a los parcientes de los archivos y las listas para clasificarlos
+    segun su ultima consulta(+10/-10 y si asistio).
+    Tambien declaramos listas para clasificarlos segun su estado.
+    */
+
+    Paciente  * array_pacientes = new Paciente[tam_P];
+
+    Paciente  * lista_mas10 = new Paciente[tam_mas10]; 
+
+    Paciente* lista_menos10 = new Paciente[tam_menos10]; 
+
+    Paciente* array_perdidos = new Paciente[tam_per];
+
+    Paciente* array_fallecidos = new Paciente[tam_fall];
+
+    /*
+    Listas de tipo consulta:
+    Declaramos en memoria la lista que utilizamos para leer los datos de las consultas de los pacientes
+    */
+
+    Consulta* array_consultas = new Consulta[tam_cons];
+
+   /*
+   Listas de tipo Medico:
+   Declaramos en memoria la lista que utilizamos para leer los datos de los medicos
+   */
+
+    Medico   * array_medicos = new Medico[tam_med]; 
+
+    /*
+   Listas de tipo Obra Social:
+   Declaramos en memoria la lista que utilizamos para leer los datos de las obras sociales
+   */
+
+    Obrasoc* array_ObraSocial = new Obrasoc[tam_obr];
+
+                                                  //Comienzo de acciones\\
+
+    leer_pacientes("IRI_Pacientes.csv", array_pacientes, tam_P);                    // Leemos la lista de pacientes
+
+    leer_consultas("IRI_Consultas.csv", array_consultas, tam_cons);  //Leemos todas las consultas
+
+    leer_medicos(array_medicos, tam_med);                               //Leemos la informacion de los medicos
+
+    leer_ObrasSociales(array_ObraSocial, tam_obr);
 
 
-    Paciente  * array_pacientes = new Paciente[tam];
-
-    leer_pacientes("IRI_Pacientes.csv", array_pacientes, tam); // aca tengo el array_pacientes cargado !!
-
-    Paciente  * lista_mas10 = new Paciente[tam2]; // lista que guarda los pacientes cuya ultima consulta fue hace + de 10 años
-
-    ultima_consulta * array_consultas = new ultima_consulta[tam5]; 
-
-    Paciente* lista_menos10 = new Paciente[tam3]; 
-
-    //paciente_full* lista_paciente_full = new paciente_full[tam6]; // lista que guarda TODOS LOS DATOS DEL PACIENTE 
-
-    Paciente * array_vivos   = new Paciente[tam7]; 
-
-    Paciente * array_muertos = new Paciente[tam8]; 
-
-    Medico   * array_medicos = new Medico[tam9]; 
-
-
+    //Liberamos toda la memoria que utilizamos.
+    
     delete[] array_pacientes; 
     delete[] lista_mas10;
     delete[] lista_menos10; 
     delete[] array_consultas;
-    delete[] array_muertos; 
-    delete[] array_vivos; 
-    
+    delete[] array_fallecidos; 
+    delete[] array_perdidos; 
 
+    //Fin del codigo
+    
     getchar();
 
     return 0;
