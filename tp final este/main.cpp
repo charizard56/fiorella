@@ -90,7 +90,8 @@ int main() {
     Indata3.close(); 
     Indata4.close();
     Indata5.close();
-    Indata6.close();
+    Outdata1.close();
+    Outdata2.close();
 
     return 0; 
 }
