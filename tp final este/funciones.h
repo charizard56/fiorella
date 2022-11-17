@@ -73,16 +73,6 @@ typedef struct
 } 
 paciente_full;          // Estructura para guardar todos los datos del paciente
 
-//Declaramos las variables para leer y guardar en los archivos
-
-ifstream Indata1;  //Lee Contacto
-ifstream Indata2;  //Lee pacientes
-ifstream Indata3;  //Lee consultas
-ifstream Indata4;  //Lee medicos
-ifstream Indata5;  //Lee Obras sociales
-ofstream Outdata1; //Guarda pacientes archivados
-ofstream Outdata2; //Guarda pacientes que volveran
-
                                     //Declaracion de las funciones\\
 
 //Lectura de archivos:

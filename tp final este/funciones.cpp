@@ -32,9 +32,11 @@ void leer_pacientes(string Nombre2, Paciente* array_pacientes, int tam_P)
 
     Indata2.open("IRI_Pacientes.csv", ios::in);  // abro el archivo en modo lectura
 
+    Indata2 >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma;
+
     while (! Indata2.eof()) // reviso que el archivo sea distinto de end of file
     {
-        Indata2 >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma; 
+     
         resize_P(array_pacientes, tam_P);
         // hago el resize ya que no se la cantidad de personas en la lista
 
@@ -89,21 +91,21 @@ void leer_consultas(string nombre3, Consulta* array_consultas, int tam_cons)
 
     Indata3.open("IRI_Consultas.csv", ios::in ); // abro el archivo de consultas en modo lectura 
 
-    while (! Indata2. eof () ) // mientras que el archivo sea distinto del final 
+    while (! Indata3. eof () ) // mientras que el archivo sea distinto del final 
     {
-        Indata2 >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma; // salteo encabezado
+        Indata3 >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma; // salteo encabezado
        
         resize_C (array_consultas, tam_cons);
 
         // hago el resize ya que no se la cantidad de personas en la lista 
 
-        Indata2 >> array_consultas[i].dni_1 >> coma >> array_consultas[i].fecha_solicitado >> coma 
+        Indata3 >> array_consultas[i].dni_1 >> coma >> array_consultas[i].fecha_solicitado >> coma 
                 >> array_consultas[i].fecha_consulta >> array_consultas[i].Asistencia >> coma >> array_consultas[i].matricula >> coma; 
 
         i++;
 
     }
-    Indata2.close(); // cierro el archivo 
+    Indata3.close(); // cierro el archivo 
 }
 
 tm conversion(string consulta)

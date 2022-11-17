@@ -82,16 +82,5 @@ int main() {
     
     getchar();
 
-    return 0;
- 
-
-    Indata1.close(); 
-    Indata2.close();
-    Indata3.close(); 
-    Indata4.close();
-    Indata5.close();
-    Outdata1.close();
-    Outdata2.close();
-
     return 0; 
 }
