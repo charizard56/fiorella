@@ -13,9 +13,9 @@ void resize_P(Paciente * array_pacientes, int tam_P) // incrementa la dimension 
         array_paciente_aux[i] = array_pacientes[i]; 
     }
 
-    delete[] array_pacientes; // libero memoria 
-
     array_pacientes = array_paciente_aux;
+
+    delete[] array_paciente_aux; // libero memoria 
 
 } // aumenta dimension de pacientes  
 
@@ -28,7 +28,7 @@ void leer_pacientes(string Nombre2, Paciente* array_pacientes, int tam_P)
 
     char coma = ',';
 
-    fstream Indata2;
+    ifstream Indata2;
 
     Indata2.open("IRI_Pacientes.csv", ios::in);  // abro el archivo en modo lectura
 
@@ -61,22 +61,41 @@ void resize_C(Consulta* array_consultas, int tam_cons)
         array_consultas_aux[i] = array_consultas[i];
     }
 
-    delete[] array_consultas;
+   
     array_consultas = array_consultas_aux;
+
+    delete[] array_consultas;
 } // aumenta dimension de consultas
 
-void resize_O(Obrasoc* array_ObraSocial, int tam_obr)
-{
-    Obrasoc* array_ObraSocial_aux = new Obrasoc[tam_obr + 1];
+void leer_Contactos(string nombre, Contacto* array_contacto, int tam_cont) {
 
-    for (int i = 0; i < tam_obr; i++)
+    int i = 0;
+
+    string dummy;
+
+    char coma = ',';
+
+    ifstream Indata1;
+
+    Indata1.open("IRI_Contactos.csv", ios::in);  // abro el archivo en modo lectura
+
+    Indata1 >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma >> dummy >> coma;
+
+    while (!Indata1.eof()) // reviso que el archivo sea distinto de end of file
     {
-        array_ObraSocial_aux[i] = array_ObraSocial[i];
-    }
 
-    delete[] array_ObraSocial;
-    array_ObraSocial = array_ObraSocial_aux;
-} // aumenta dimension de consultas
+        resize_C(array_contacto, tam_cont);
+        // hago el resize ya que no se la cantidad de personas en la lista
+
+        Indata1 >> array_contacto[i].celular >> coma >> array_contacto[i].Direccion >> coma >> array_contacto[i].dni >> coma >> array_contacto[i].Mail >> coma >> array_contacto[i].Telefono >> coma;
+        // guardo a medida que voy leyendo en mi lista 
+
+        i++; // incremento las iteraciones ! 
+
+    }
+    Indata1.close(); // cierro el archivo 
+    
+}
 
 void leer_consultas(string nombre3, Consulta* array_consultas, int tam_cons)
 {
@@ -215,6 +234,8 @@ void separar_pacientes(Paciente* array_pacientes, Consulta* array_consultas, int
 
                       Lista_mas10[tam_menos10] = array_pacientes[i]; 
 
+                      Lista_mas10[tam_menos10].estado = "Archivado";
+
                   } 
 
                   if (diferencia > 10 && array_consultas[j].Asistencia == false)  //Solo guardamos los pacientes que si asistieron
@@ -260,46 +281,37 @@ void separar_pacientes(Paciente* array_pacientes, Consulta* array_consultas, int
   delete[] falso_archivado; 
 }
 
-void internados_o_fallecidos(Paciente* Lista_menos10, int tam_mas10, Paciente* array_nc, int tam_per, Paciente* array_muertos, int tam_fall)
+void resize_C(Contacto* array_contactos, int tam_cont) {
 
-{
-    int cont_muertos = 0;
-    int cont_nc = 0; 
+    Contacto* array_contacto_aux = new Contacto[tam_cont + 1];  // icremento de a 1
 
-    for (int i = 0; i < tam_mas10; i++)
+    for (int i = 0; i < tam_cont; i++) // en la ultima posicion se agrega una mas, se redimensiona
     {
-        if (Lista_menos10[i].estado == "fallecido")
-        {
-            resize_P(array_muertos, tam_fall);
-            array_muertos[cont_muertos] = Lista_menos10[i];
-            cont_muertos++;
-        }
-
-        if (Lista_menos10[i].estado == "n/c")
-        {
-            resize_P(array_nc, tam_per);
-            array_nc[cont_nc] = Lista_menos10[i];
-            cont_nc++;
-
-        }
-                
+        array_contacto_aux[i] = array_contactos[i];
     }
+
+    array_contactos = array_contacto_aux;
+
+    delete[] array_contacto_aux; // libero memoria 
+
 }
 
-void resize_M(Medico* array_medicos, int tam_med)
-{
-    Medico * array_medicos_aux = new Medico [tam_med + 1];
+void resize_M(Medico* array_medicos, int tam_med) {
 
-    for (int i = 0; i < tam_med; i++)
+    Medico* array_medicos_aux = new Medico[tam_med + 1];  // icremento de a 1
+
+    for (int i = 0; i < tam_med; i++) // en la ultima posicion se agrega una mas, se redimensiona
     {
         array_medicos_aux[i] = array_medicos[i];
     }
 
-    delete[] array_medicos;
     array_medicos = array_medicos_aux;
+
+    delete[] array_medicos_aux; // libero memoria 
+
 }
 
-void leer_medicos(Medico* array_medicos, int tam_med)
+void leer_medicos(string nombre, Medico* array_medicos, int tam_med)
 
 {
     int i = 0;
@@ -331,32 +343,132 @@ void leer_medicos(Medico* array_medicos, int tam_med)
     Indata4.close(); // cierro el archivo 
 }
 
-void leer_ObrasSociales(Obrasoc* ObraSocial, int tam_obr) {
+void Escribir_Archivados(Paciente *Lista_mas10, int tam_mas10, Paciente* Lista_menos10, int tam_menos10) {
 
-    
+
     int i = 0;
 
     string dummy;
 
     char coma = ',';
 
-    fstream Indata5;
+    int cont = 0;
 
-    Indata5.open("IRI_ObraSocial.csv", ios::in);  // abro el archivo en modo lectura
+    Paciente* array_archivados = new Paciente[cont];
 
-    while (!Indata5.eof()) // reviso que el archivo sea distinto de end of file
-    {
-        Indata5 >> dummy >> coma >> dummy >> coma;
-        resize_O(ObraSocial, tam_obr);
-        // hago el resize ya que no se la cantidad de personas en la lista
+    for (i = 0; i < tam_mas10; i++) {
 
-        Indata5 >> ObraSocial[i].ID >> coma >> ObraSocial[i].Nombre >> coma;
-        // guardo a medida que voy leyendo en mi lista 
 
-        i++; // incremento las iteraciones ! 
+        if (Lista_mas10[i].estado == "Archivado") {
 
+            resize_P(array_archivados, cont);
+
+            array_archivados[cont] == Lista_mas10[i];
+
+            cont++;
+
+        }
+        if (Lista_menos10[i].estado == "fallecido") {
+
+            resize_P(array_archivados, cont);
+
+            array_archivados[cont] == Lista_menos10[i];
+
+            cont++;
+
+        }
     }
-    Indata5.close(); // cierro el archivo 
 
     
+
+    ofstream Outdata1;
+
+    Outdata1.open("ARCHIVADOS.csv", ios::out);
+
+    Outdata1 << "dni , nombre , apellido , sexo , natalicio , estado , id_os" << endl;
+
+    for (i = 0; i < cont; i++) {
+
+        Outdata1 << array_archivados[i].Apellido << coma << array_archivados[i].dni << coma << 
+                    array_archivados[i].estado << coma << array_archivados[i].Nacimiento << coma << 
+                    array_archivados[i].Nombre << coma << array_archivados[i].os << coma << 
+                    array_archivados[i].sexo << coma << "(Archivado)";
+    }
+
+    delete[] array_archivados;
+
+    Outdata1.close()
 }
+
+void Retornan(Paciente* lista_menos10, int tam_menos10) {
+
+
+    int i = 0;
+
+    char coma = ','
+
+    int cont = 0, opcion = 0;
+
+    paciente_full* array_retornan = new paciente_full[cont];
+
+    ofstream Outdata2;
+
+    Outdata2.open("RETORNAN.csv", ios::out);
+
+    for (i = 0; i < tam_menos10; i++) {
+
+        opcion = rand() % 2;  //Emulamos el momento en que llaman para preguntarle si vuelve
+
+        if (lista_menos10[i].estado == "n/c" && opcion == 1) {
+
+            resize_PF(array_retornan, cont);
+
+            array_retornan[cont].Apellido = lista_menos10[i].Apellido;
+            array_retornan[cont].dni = lista_menos10[i].dni;
+            array_retornan[cont].Nombre = lista_menos10[i].Nombre;
+            array_retornan[cont].os = lista_menos10[i].os;
+            array_retornan[cont].retorna = true;
+
+        
+        }
+        if (lista_menos10[i].estado == "n/c" && opcion == 0) {
+
+            array_retornan[cont].Apellido = lista_menos10[i].Apellido;
+            array_retornan[cont].dni = lista_menos10[i].dni;
+            array_retornan[cont].Nombre = lista_menos10[i].Nombre;
+            array_retornan[cont].os = lista_menos10[i].os;
+            array_retornan[cont].retorna = false;
+        }
+
+
+
+
+    }
+
+    for (i = 0; i < cont; i++) {
+
+        Outdata2 << array_retornan[i].Apellido << coma << array_retornan[i].dni << coma << 
+                    array_retornan[i].medico << coma << array_retornan[i].Nombre << coma << 
+                    array_retornan[i].os << coma << array_retornan[i].retorna << coma;
+    }
+
+    delete[] array_retornan;
+
+    Outdata2.close()
+
+}
+
+void resize_PF(paciente_full* array_pacientes, int tam_P) // incrementa la dimension de 1 en 1 del array
+{
+    paciente_full* array_paciente_aux = new paciente_full[tam_P + 1];  // icremento de a 1
+
+    for (int i = 0; i < tam_P; i++) // en la ultima posicion se agrega una mas, se redimensiona
+    {
+        array_paciente_aux[i] = array_pacientes[i];
+    }
+
+    array_pacientes = array_paciente_aux;
+
+    delete[] array_paciente_aux; // libero memoria 
+
+} // aumenta dimension de pacientes  

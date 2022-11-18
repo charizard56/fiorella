@@ -17,6 +17,7 @@ int main() {
     int tam_fall = 0; 
     int tam_med = 0; 
     int tam_obr = 0;
+    int tam_cont = 0;
 
                                          //Declaracion de Listas en memoria\\
 
@@ -52,11 +53,11 @@ int main() {
     Medico   * array_medicos = new Medico[tam_med]; 
 
     /*
-   Listas de tipo Obra Social:
-   Declaramos en memoria la lista que utilizamos para leer los datos de las obras sociales
+   Listas de tipo Contacto:
+   Declaramos en memoria la lista que utilizamos para leer los datos de contacto los pacientes
    */
 
-    Obrasoc* array_ObraSocial = new Obrasoc[tam_obr];
+    Contacto* array_contacto = new Contacto[tam_cont];
 
                                                   //Comienzo de acciones\\
 
@@ -64,10 +65,15 @@ int main() {
 
     leer_consultas("IRI_Consultas.csv", array_consultas, tam_cons);  //Leemos todas las consultas
 
-    leer_medicos(array_medicos, tam_med);                               //Leemos la informacion de los medicos
+    leer_medicos("IRI_Medicos.csv", array_medicos, tam_med);         //Leemos la informacion de los medicos
 
-    leer_ObrasSociales(array_ObraSocial, tam_obr);
+    leer_Contactos("IRI_Contactos.csv", array_contacto, tam_cont);
 
+    separar_pacientes(array_pacientes, array_consultas, tam_P, tam_cons, lista_mas10, tam_mas10, lista_menos10, tam_menos10);
+
+    Escribir_Archivados(lista_mas10, tam_mas10, lista_menos10, tam_menos10);     //Archivamos a los pacientes con mas de diez años q no asistieron
+
+    Retornan(lista_menos10, tam_menos10);
 
     //Liberamos toda la memoria que utilizamos.
     

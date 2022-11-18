@@ -77,13 +77,21 @@ paciente_full;          // Estructura para guardar todos los datos del paciente
 
 //Lectura de archivos:
 
-void leer_pacientes(string Indata2, Paciente *array_pacientes, int tam);
+void leer_pacientes(string nombre, Paciente *array_pacientes, int tam);
 
 void leer_consultas(string nombre3, Consulta *array_consultas, int tam_cons);
 
-void leer_medicos(Medico *array_medicos, int tam_med);
+void leer_medicos(string nombre, Medico *array_medicos, int tam_med);
 
-void leer_ObrasSociales(Obrasoc* ObraSocial, int tam_obr);
+void leer_Contactos(string nombre, Contacto* array_contacto, int tam_cont);
+
+//Impresion de archivos:
+
+void Escribir_Archivados(Paciente* Lista_mas10, int tam_mas10, Paciente* Lista_menos10, int tam_menos10);
+
+void Retornan(Paciente* lista_menos10, int tam_menos10);
+
+//void Escribir_Retornan(Paciente* Lista_mas10, int tam_mas10);
 
 //Clasificaciones por lista de los pacientes:
 
@@ -105,4 +113,6 @@ void resize_C(Consulta* array_consultas, int tam_cons);    //Incrementa la dimen
 
 void resize_M(Medico* array_medicos, int tam_med);           //Incrementa la dimension de la lista para tipos Medico
 
-void resize_M(Obrasoc* array_ObraSocial, int tam_obr);
+void resize_C(Contacto* array_contactos, int tam_cont);
+
+void resize_PF(paciente_full* array_pacientes, int tam_P);
