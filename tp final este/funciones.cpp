@@ -363,7 +363,7 @@ void Escribir_Archivados(Paciente *Lista_mas10, int tam_mas10, Paciente* Lista_m
 
             resize_P(array_archivados, cont);
 
-            array_archivados[cont] == Lista_mas10[i];
+            array_archivados[cont] = Lista_mas10[i];
 
             cont++;
 
@@ -372,7 +372,7 @@ void Escribir_Archivados(Paciente *Lista_mas10, int tam_mas10, Paciente* Lista_m
 
             resize_P(array_archivados, cont);
 
-            array_archivados[cont] == Lista_menos10[i];
+            array_archivados[cont] = Lista_menos10[i];
 
             cont++;
 
@@ -397,7 +397,7 @@ void Escribir_Archivados(Paciente *Lista_mas10, int tam_mas10, Paciente* Lista_m
 
     delete[] array_archivados;
 
-    Outdata1.close()
+    Outdata1.close();
 }
 
 void Retornan(Paciente* lista_menos10, int tam_menos10) {
@@ -405,9 +405,10 @@ void Retornan(Paciente* lista_menos10, int tam_menos10) {
 
     int i = 0;
 
-    char coma = ','
+    char coma = ',';
 
-    int cont = 0, opcion = 0;
+    int cont = 0; 
+    int opcion = 0;
 
     paciente_full* array_retornan = new paciente_full[cont];
 
@@ -454,7 +455,7 @@ void Retornan(Paciente* lista_menos10, int tam_menos10) {
 
     delete[] array_retornan;
 
-    Outdata2.close()
+    Outdata2.close();
 
 }
 

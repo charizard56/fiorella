@@ -38,12 +38,21 @@ int main() {
 
     Paciente* array_fallecidos = new Paciente[tam_fall];
 
+    array_pacientes = NULL;
+    lista_mas10 = NULL;
+    lista_menos10 = NULL;
+    array_perdidos = NULL;
+    array_fallecidos = NULL;
+
     /*
     Listas de tipo consulta:
     Declaramos en memoria la lista que utilizamos para leer los datos de las consultas de los pacientes
     */
 
     Consulta* array_consultas = new Consulta[tam_cons];
+
+    array_fallecidos = NULL;
+
 
    /*
    Listas de tipo Medico:
@@ -52,12 +61,18 @@ int main() {
 
     Medico   * array_medicos = new Medico[tam_med]; 
 
+    array_medicos = NULL;
+
+
     /*
    Listas de tipo Contacto:
    Declaramos en memoria la lista que utilizamos para leer los datos de contacto los pacientes
    */
 
     Contacto* array_contacto = new Contacto[tam_cont];
+
+    array_contacto = NULL;
+
 
                                                   //Comienzo de acciones\\
 

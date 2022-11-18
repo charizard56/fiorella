@@ -68,7 +68,7 @@ typedef struct
     string dni;
     string os; // obra social
     bool retorna; // si el paciente retorna o no. 
-    Medico medico;  // datos del ultimo medico q atendio 
+    string medico;  // datos del ultimo medico q atendio 
 
 } 
 paciente_full;          // Estructura para guardar todos los datos del paciente
